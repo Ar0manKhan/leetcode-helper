@@ -2,7 +2,10 @@ module leetcode-helper
 
 go 1.23.5
 
-require google.golang.org/api v0.219.0
+require (
+	github.com/google/generative-ai-go v0.19.0
+	google.golang.org/api v0.219.0
+)
 
 require (
 	cloud.google.com/go v0.115.0 // indirect
@@ -14,7 +17,6 @@ require (
 	github.com/felixge/httpsnoop v1.0.4 // indirect
 	github.com/go-logr/logr v1.4.2 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
-	github.com/google/generative-ai-go v0.19.0 // indirect
 	github.com/google/s2a-go v0.1.9 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.3.4 // indirect

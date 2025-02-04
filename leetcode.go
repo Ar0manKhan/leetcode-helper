@@ -5,6 +5,7 @@ import (
 	"net/http"
 )
 
+// const LeetcodeAPI = "http://localhost:3000/" // for local testing
 const LeetcodeAPI = "https://alfa-leetcode-api.onrender.com/"
 
 func GetDailyQuestion() (DailyQuestionResponse, error) {
