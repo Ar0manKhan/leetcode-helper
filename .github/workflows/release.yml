@@ -39,9 +39,6 @@ jobs:
           upx --best --lzma dist/leetcode-helper-linux
           upx --best --lzma dist/leetcode-helper-windows.exe
 
-      - name: Optimize macOS Binary
-        run: strip -x dist/leetcode-helper-macos
-
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
