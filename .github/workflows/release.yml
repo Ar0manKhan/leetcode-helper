@@ -1,0 +1,64 @@
+name: Build and Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build & Compress Binaries
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: stable
+
+      - name: Install Dependencies
+        run: |
+          go mod tidy
+          go mod download
+
+      - name: Build for all platforms
+        run: |
+          mkdir -p dist
+          GOOS=linux GOARCH=amd64 go build -o dist/leetcode-helper-linux -a -gcflags=all="-l -B" -ldflags="-w -s"
+          GOOS=windows GOARCH=amd64 go build -o dist/leetcode-helper-windows.exe -a -gcflags=all="-l -B" -ldflags="-w -s"
+          GOOS=darwin GOARCH=amd64 go build -o dist/leetcode-helper-macos -a -gcflags=all="-l -B" -ldflags="-w -s -buildid="
+
+      - name: Install UPX
+        run: sudo apt install -y upx
+
+      - name: Compress Binaries (Linux & Windows)
+        run: |
+          upx --best --lzma dist/leetcode-helper-linux
+          upx --best --lzma dist/leetcode-helper-windows.exe
+
+      - name: Optimize macOS Binary
+        run: strip -x dist/leetcode-helper-macos
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/leetcode-helper-linux
+            dist/leetcode-helper-windows.exe
+            dist/leetcode-helper-macos
+          tag_name: v1.0.${{ github.run_number }}
+          release_name: Release v1.0.${{ github.run_number }}
+          body: "Automated release of leetcode-helper."
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Delete Old Releases (Keep Latest 5)
+        uses: dev-drprasad/delete-older-releases@v0.3.3
+        with:
+          keep_latest: 5
+          delete_tags: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

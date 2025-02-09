@@ -4,6 +4,7 @@ go 1.23.5
 
 require (
 	github.com/google/generative-ai-go v0.19.0
+	github.com/manifoldco/promptui v0.9.0
 	google.golang.org/api v0.219.0
 )
 
@@ -14,6 +15,7 @@ require (
 	cloud.google.com/go/auth/oauth2adapt v0.2.7 // indirect
 	cloud.google.com/go/compute/metadata v0.6.0 // indirect
 	cloud.google.com/go/longrunning v0.5.7 // indirect
+	github.com/chzyer/readline v0.0.0-20180603132655-2972be24d48e // indirect
 	github.com/felixge/httpsnoop v1.0.4 // indirect
 	github.com/go-logr/logr v1.4.2 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect

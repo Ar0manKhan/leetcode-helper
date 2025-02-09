@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/google/generative-ai-go/genai"
+	"github.com/manifoldco/promptui"
 	"google.golang.org/api/option"
 )
 
@@ -26,7 +27,16 @@ func GenerateTestCase(q *DailyQuestionResponse) (*genai.GenerateContentResponse,
 	}
 	defer client.Close()
 
-	model := client.GenerativeModel("gemini-1.5-flash")
+	aiModels := []string{"gemini-2.0-flash", "gemini-2.0-flash-thinking-exp-01-21", "gemini-1.5-flash"}
+	prompt := promptui.Select{
+		Label: "Select AI Model",
+		Items: aiModels,
+	}
+	_, result, err := prompt.Run()
+	if err != nil {
+		return nil, err
+	}
+	model := client.GenerativeModel(result)
 	model.SetTemperature(1)
 	model.SetTopK(40)
 	model.SetTopP(0.95)
