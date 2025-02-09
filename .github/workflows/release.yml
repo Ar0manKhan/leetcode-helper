@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+
 jobs:
   build:
     name: Build & Compress Binaries
@@ -24,20 +27,27 @@ jobs:
           go mod tidy
           go mod download
 
+      # - name: Build for all platforms
+      #   run: |
+      #     mkdir -p dist
+      #     GOOS=linux GOARCH=amd64 go build -o dist/leetcode-helper-linux -a -gcflags=all="-l -B" -ldflags="-w -s"
+      #     GOOS=windows GOARCH=amd64 go build -o dist/leetcode-helper-windows.exe -a -gcflags=all="-l -B" -ldflags="-w -s"
+      #     GOOS=darwin GOARCH=amd64 go build -o dist/leetcode-helper-macos -a -gcflags=all="-l -B" -ldflags="-w -s -buildid="
+
       - name: Build for all platforms
         run: |
           mkdir -p dist
-          GOOS=linux GOARCH=amd64 go build -o dist/leetcode-helper-linux -a -gcflags=all="-l -B" -ldflags="-w -s"
-          GOOS=windows GOARCH=amd64 go build -o dist/leetcode-helper-windows.exe -a -gcflags=all="-l -B" -ldflags="-w -s"
-          GOOS=darwin GOARCH=amd64 go build -o dist/leetcode-helper-macos -a -gcflags=all="-l -B" -ldflags="-w -s -buildid="
+          GOOS=linux GOARCH=amd64 go build -o dist/leetcode-helper-linux
+          GOOS=windows GOARCH=amd64 go build -o dist/leetcode-helper-windows.exe
+          GOOS=darwin GOARCH=amd64 go build -o dist/leetcode-helper-macos
 
-      - name: Install UPX
-        run: sudo apt install -y upx
+      # - name: Install UPX
+      #   run: sudo apt install -y upx
 
-      - name: Compress Binaries (Linux & Windows)
-        run: |
-          upx --best --lzma dist/leetcode-helper-linux
-          upx --best --lzma dist/leetcode-helper-windows.exe
+      # - name: Compress Binaries (Linux & Windows)
+      #   run: |
+      #     upx --best --lzma dist/leetcode-helper-linux
+      #     upx --best --lzma dist/leetcode-helper-windows.exe
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
