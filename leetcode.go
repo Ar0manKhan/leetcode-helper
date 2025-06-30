@@ -10,19 +10,15 @@ import (
 )
 
 func selectAPIURL() (string, error) {
-	availableUrls := []string{
-		"https://alfa-leetcode-api.onrender.com/",
-		"http://localhost:3000/",
+	prompt := promptui.Prompt{
+		Label:   "Enter localhost port",
+		Default: "3000",
 	}
-	prompt := promptui.Select{
-		Label: "Select API URL",
-		Items: availableUrls,
-	}
-	_, result, err := prompt.Run()
+	port, err := prompt.Run()
 	if err != nil {
 		return "", err
 	}
-	return result, nil
+	return fmt.Sprintf("http://localhost:%s/", port), nil
 }
 
 func GetDailyQuestion() (Question, error) {
