@@ -9,8 +9,8 @@ import (
 	"github.com/google/generative-ai-go/genai"
 )
 
-func SaveFile(q *DailyQuestionResponse, generatedCode *genai.GenerateContentResponse) error {
-	filename := q.Data.ActiveDailyCodingChallengeQuestion.Question.TitleSlug + ".cpp"
+func SaveFile(q *Question, generatedCode *genai.GenerateContentResponse) error {
+	filename := q.TitleSlug + ".cpp"
 	// create this file in current directory
 	var sb strings.Builder
 	// loop through generatedCode.Candidates[0].Content.Parts and write each part to file

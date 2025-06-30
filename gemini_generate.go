@@ -12,7 +12,7 @@ import (
 	"google.golang.org/api/option"
 )
 
-func GenerateTestCase(q *DailyQuestionResponse) (*genai.GenerateContentResponse, error) {
+func GenerateTestCase(q *Question) (*genai.GenerateContentResponse, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
 	defer cancel()
 	apiKey, ok := os.LookupEnv("GEMINI_API_KEY")
@@ -56,8 +56,8 @@ func GenerateTestCase(q *DailyQuestionResponse) (*genai.GenerateContentResponse,
 	return session.SendMessage(ctx, genai.Text("INSERT_INPUT_HERE"))
 }
 
-func GenerateQuestionString(q *DailyQuestionResponse) string {
-	snippets := q.Data.ActiveDailyCodingChallengeQuestion.Question.CodeSnippets
+func GenerateQuestionString(q *Question) string {
+	snippets := q.CodeSnippets
 	snippetIdx := slices.IndexFunc(snippets, func(e CodeSnippet) bool {
 		return e.LangSlug == "cpp"
 	})
@@ -83,9 +83,9 @@ Test case should be in main function and follow this structure:
 %s`,
 		snippets[snippetIdx].Lang,
 		snippets[snippetIdx].Code,
-		q.Data.ActiveDailyCodingChallengeQuestion.Question.QuestionFrontendID,
-		q.Data.ActiveDailyCodingChallengeQuestion.Question.Title,
-		q.Data.ActiveDailyCodingChallengeQuestion.Question.Content,
+		q.QuestionFrontendID,
+		q.Title,
+		q.Content,
 	)
 	return question
 }
