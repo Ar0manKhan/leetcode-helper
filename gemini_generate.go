@@ -27,7 +27,7 @@ func GenerateTestCase(q *Question) (*genai.GenerateContentResponse, error) {
 	}
 	defer client.Close()
 
-	aiModels := []string{"gemini-2.0-flash", "gemini-2.0-flash-thinking-exp-01-21", "gemini-1.5-flash"}
+	aiModels := []string{"gemini-3-flash-preview", "gemini-2.5-flash", "gemini-2.5-pro, gemini-3-pro-preview"}
 	prompt := promptui.Select{
 		Label: "Select AI Model",
 		Items: aiModels,
