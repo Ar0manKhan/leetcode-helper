@@ -28,7 +28,7 @@ func GetDailyQuestion() (Question, error) {
 	if err != nil {
 		return Question{}, err
 	}
-	dailyQuestionUrl := leetcodeAPIUrl + "dailyQuestion"
+	dailyQuestionUrl := leetcodeAPIUrl + "daily/raw"
 	log.Println("You selected", leetcodeAPIUrl)
 	// make get api call to daily question url
 	req, err := http.NewRequest("GET", dailyQuestionUrl, nil)
