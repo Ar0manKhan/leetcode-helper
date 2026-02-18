@@ -49,7 +49,7 @@ func GetDailyQuestion() (Question, error) {
 	if err != nil {
 		return Question{}, err
 	}
-	return dailyQuestion.Data.ActiveDailyCodingChallengeQuestion.Question, nil
+	return dailyQuestion.ActiveDailyCodingChallengeQuestion.Question, nil
 }
 
 func GetQuestionBySlug(slug string) (Question, error) {

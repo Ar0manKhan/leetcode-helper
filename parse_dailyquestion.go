@@ -64,13 +64,11 @@ type Question struct {
 }
 
 type DailyQuestionResponse struct {
-	Data struct {
-		ActiveDailyCodingChallengeQuestion struct {
-			Date     string   `json:"date"`
-			Link     string   `json:"link"`
-			Question Question `json:"question"`
-		} `json:"activeDailyCodingChallengeQuestion"`
-	} `json:"data"`
+	ActiveDailyCodingChallengeQuestion struct {
+		Date     string   `json:"date"`
+		Link     string   `json:"link"`
+		Question Question `json:"question"`
+	} `json:"activeDailyCodingChallengeQuestion"`
 }
 
 type SelectQuestionResponse struct {
@@ -94,4 +92,3 @@ func ParseSelectedQuestion(body []byte) (SelectQuestionResponse, error) {
 	}
 	return response, nil
 }
-
